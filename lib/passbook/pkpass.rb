@@ -76,13 +76,13 @@ module Passbook
 
     def get_file_content
       file = p12_cert || Passbook.p12_cert
-      if File.exists? file
+      if file.respond_to? :read
+        file.read
+      elsif File.exists? file
         File.read file
       else
-        # assume it has already been read, and what's been set is the content
-        file
+        raise ArgumentError, "Do not know how to read content from file"
       end
-
     end
 
     def createSignature manifest
