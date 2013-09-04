@@ -1,7 +1,7 @@
 require 'digest/sha1'
 require 'openssl'
-require 'zip/zip'
 require 'base64'
+require 'zip'
 
 module Passbook
   class PKPass
@@ -133,7 +133,7 @@ module Passbook
 
     def outputZip manifest, signature
 
-      Zip::ZipOutputStream.write_buffer do |zip|
+      Zip::OutputStream.write_buffer do |zip|
         zip.put_next_entry 'pass.json'
         zip.write @pass
         zip.put_next_entry 'manifest.json'

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'zip'
 
 describe Passbook  do
 
@@ -111,7 +112,7 @@ describe Passbook  do
       pass.addFiles ["#{base_path}/icon.png","#{base_path}/icon@2x.png","#{base_path}/logo.png","#{base_path}/logo@2x.png"]
       pass.should_receive(:createSignature).and_return('Signed by the Honey Badger')
       @file_entries = []
-      Zip::ZipInputStream::open(zip_path) {|io|
+      Zip::InputStream::open(zip_path) {|io|
         while (entry = io.get_next_entry)
           @file_entries << entry.name
         end
